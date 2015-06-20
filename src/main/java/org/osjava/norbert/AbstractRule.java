@@ -68,6 +68,7 @@ abstract class AbstractRule implements Rule {
         regExp = regExp.replace("-", "\\-");
         regExp = regExp.replace(".", "\\.");
         regExp = regExp.replace("*", ".*");
+        regExp = regExp.replace("?", "\\?");
 
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(query);
