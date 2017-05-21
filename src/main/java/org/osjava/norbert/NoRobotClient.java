@@ -57,6 +57,7 @@ public class NoRobotClient {
     private boolean existsRobots;
     private boolean wildcardsAllowed;
     private String sitemap;
+    private String host;
     
     /**
      * Create a Client for a particular user-agent name. 
@@ -186,6 +187,11 @@ public class NoRobotClient {
                     continue;
                 }
 
+                if(lineToLowerCase.startsWith("host:")) {
+                    host = line.substring("Host:".length()).trim();
+                    continue;
+                }
+
                 // if User-agent == userAgent 
                 // record the rest up until end or next User-agent
                 // then quit (? check spec)
@@ -300,6 +306,10 @@ public class NoRobotClient {
 
     public String getSitemap() {
         return sitemap;
+    }
+
+    public String getHost() {
+        return host;
     }
 
     // INLINE: as such from genjava/gj-core's net package. Simple method 
