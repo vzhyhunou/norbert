@@ -219,7 +219,7 @@ public class NoRobotClientTest extends TestCase {
     public void testSitemap() throws MalformedURLException, NoRobotException {
         NoRobotClient nrc = new NoRobotClient("other");
         nrc.setWildcardsAllowed(true);
-        nrc.parseText(new URL("http://www.junona-med.ru"), "User-Agent: *\n" +
+        nrc.parseText(new URL("http://www.ru"), "User-Agent: *\n" +
                 "Disallow: /links/\n" +
                 "Disallow: /guestbook/\n" +
                 "Disallow: /html/\n" +
@@ -227,14 +227,14 @@ public class NoRobotClientTest extends TestCase {
                 "Disallow: /video/\n" +
                 "Disallow: /v/\n" +
                 "Disallow: /*?*\n" +
-                "Sitemap: http://www.junona-med.ru/sitemap.xml");
-        assertEquals("http://www.junona-med.ru/sitemap.xml", nrc.getSitemap());
+                "Sitemap: http://www.ru/sitemap.xml");
+        assertEquals("http://www.ru/sitemap.xml", nrc.getSitemap());
     }
 
     public void testHost() throws MalformedURLException, NoRobotException {
         NoRobotClient nrc = new NoRobotClient("other");
         nrc.setWildcardsAllowed(true);
-        nrc.parseText(new URL("http://www.junona-med.ru"), "User-Agent: *\n" +
+        nrc.parseText(new URL("http://www.ru"), "User-Agent: *\n" +
                 "Disallow: /links/\n" +
                 "Disallow: /guestbook/\n" +
                 "Disallow: /html/\n" +
@@ -242,7 +242,16 @@ public class NoRobotClientTest extends TestCase {
                 "Disallow: /video/\n" +
                 "Disallow: /v/\n" +
                 "Disallow: /*?*\n" +
-                "Host: https://www.junona-med.ru");
-        assertEquals("https://www.junona-med.ru", nrc.getHost());
+                "Host: https://www.ru");
+        assertEquals("https://www.ru", nrc.getHost());
+    }
+
+    public void testDisallowed() throws MalformedURLException, NoRobotException {
+        NoRobotClient nrc = new NoRobotClient("other");
+        nrc.setWildcardsAllowed(true);
+        String base = "http://www.ru";
+        nrc.parseText(new URL(base), "User-Agent: *\n" +
+                "Disallow: /*?*");
+        assertFalse(nrc.isUrlAllowed(new URL(base + "/q?index")));
     }
 }
